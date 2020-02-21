@@ -4,6 +4,9 @@ let dom = window.document
 //时间线
 let timeline = [];
 
+//角色, 记录角色的基本信息用于渲染
+let role_list = [];
+
 
 //将时间线上每个人的区域id与数据进行绑定，以便查询。
 let id_detail_map = {};
@@ -22,11 +25,12 @@ let warning_div = dom.getElementById("warning_div")
 let save = () => {
     //保存对象
     let save_obj = {
-        "timeline": timeline
+        "timeline": timeline,
+        "roles": role_list
     };
     //保存至本地
     localStorage.setItem("mi-save", JSON.stringify(save_obj));
-    console.log("save");
+    // console.log("save");
 };
 
 /**
@@ -34,27 +38,34 @@ let save = () => {
  */
 let load = () => {
     //载入
-    let save_obj=JSON.parse(localStorage.getItem("mi-save"));
-    console.log(save_obj);
+    let save_obj = JSON.parse(localStorage.getItem("mi-save"));
+    // console.log(save_obj);
 
-    if(save_obj!==null) {
+    if (save_obj !== null) {
         //保存至内存
         timeline = save_obj.timeline;
+        role_list = save_obj.roles;
         return true;
-    }else{
+    } else {
         return false;
     }
 };
 /**
  * 清空过去的时间线
  */
-let clear=()=>{
+let clear = () => {
     //清除本地缓存
     localStorage.removeItem("mi-save");
     //清空内存
-    timeline=[];
+    timeline = [];
+    role_list = [];
     //重绘
     visualTimeline();
+
+    //刷新面板
+    name_input.value = "";
+    time_input.value = "";
+    detail_input.value = "";
 };
 
 /**
@@ -179,6 +190,11 @@ let updateTimeline = () => {
         return;
     }
 
+    //将姓名记录下来
+    if (role_list.includes(name_input.value) === false) {
+        role_list.push(name_input.value);
+    }
+
     //添加至时间线
     let time = parseTime(time_input.value);
     let point = searchTimeline(time);
@@ -233,6 +249,20 @@ let updateTimeline = () => {
 };
 
 /**
+ * 渲染细节, 将出现过的名字高亮。
+ */
+let renderDetail = (detail) => {
+
+    for (let i = 0; i < role_list.length; i++) {
+
+        let name_html = "<span class='highlight'>" + role_list[i] + "</span>";
+        detail = detail.replace(new RegExp(role_list[i], "gm"), name_html);
+    }
+    // console.log(detail);
+    return detail;
+};
+
+/**
  * 创建一个时间点中的一个人的细节
  * @param time
  * @param nameDetail
@@ -259,8 +289,9 @@ let createNameDetail = (time, nameDetail) => {
 
         //细节
         let detail_span = dom.createElement("span");
-        detail_span.innerText = nameDetail[i].detail;
-
+        // detail_span.innerText = nameDetail[i].detail;
+        detail_span.innerHTML = renderDetail(nameDetail[i].detail);
+        // detail_span.innerHTML=nameDetail[i].detail;
         // 创建ID
         let detail_span_id = "detail_" + Math.random();
         detail_span.setAttribute("id", detail_span_id);
@@ -275,6 +306,11 @@ let createNameDetail = (time, nameDetail) => {
         //添加按键事件，按键完成将会在输入面板显示
         detail_span.addEventListener("click", (e) => {
             let detail_click = id_detail_map[e.target.id];
+            // console.log(e);
+            if (detail_click === undefined) {
+                detail_click=id_detail_map[e.path[1].id];
+            }
+            console.log(detail_click);
             name_input.value = detail_click.name;
             time_input.value = detail_click.time;
             detail_input.value = detail_click.detail;
@@ -415,20 +451,20 @@ let start = () => {
     });
 
     //添加新建事件
-    dom.getElementById("new").addEventListener("click",()=>{
-        if(confirm("新建时间线将删除历史时间线，是否继续？")){
+    dom.getElementById("new").addEventListener("click", () => {
+        if (confirm("新建时间线将删除历史时间线，是否继续？")) {
             //重绘
             clear();
         }
     });
 
     //添加帮助事件
-    dom.getElementById("help").addEventListener("click",()=>{
+    dom.getElementById("help").addEventListener("click", () => {
         alert("清除输入框：alt+c，更新时间线：alt+s。");
     });
 
     //载入保存的时间线
-    if(load()){
+    if (load()) {
         //绘制时间线
         visualTimeline();
     }
