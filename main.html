@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时间线管理</title>
+    <link href="./drawable/logo.png" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="./layui/css/layui.css" media="all">
+    <style>
+        .name{
+            font-weight: bold;
+            font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--固定导航栏，置于最上方-->
+<div style="position: fixed; width: 100%; z-index: 100">
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+            <a href="#"><img src="./drawable/logo.png" class="layui-nav-img" alt="无法加载图片">我是谜 - 时间线整理APP</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="#" id="new">新建</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="#" id="help">帮助</a>
+        </li>
+    </ul>
+</div>
+
+<!--空行，就先这么实现了-->
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<!--左栏快速编辑栏也固定下来-->
+<div class="layui-card" style="position: fixed; width: 25%; z-index: 2">
+    <div class="layui-card-body">
+
+        <br>
+        <div id="warning_div" style="text-align: center; color: #FD482C; visibility: hidden">无警告！</div>
+        <!--角色输入框-->
+        <input id="name_input" type="text" placeholder="请输入角色" class="layui-input">
+        <br>
+
+        <!--时间输入框-->
+        <input id="time_input" type="text" placeholder="请输入时间（格式：时-分, 24小时）" class="layui-input">
+        <br>
+
+        <!--内容输入框-->
+        <textarea id="detail_input" placeholder="请输入内容" class="layui-textarea" style="height: 200px"></textarea>
+
+        <br>
+
+        <!--更新案件按钮-->
+        <button id="update_button" type="button" class="layui-btn layui-btn-primary layui-btn-radius"
+                style="display:block;margin:0 auto">
+            更新时间线 （alt+s）
+        </button>
+    </div>
+</div>
+
+
+<div class="layui-row layui-col-space15">
+
+
+    <div class="layui-col-md3">
+        <!--左边空的-->
+    </div>
+    <div class="layui-col-md9">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>案件时间线</legend>
+                </fieldset>
+                <div id="timeline-container">
+                    <!--<li class="layui-timeline-item">-->
+                        <!--<i class="layui-icon layui-timeline-axis"></i>-->
+                        <!--<div class="layui-timeline-content layui-text">-->
+                            <!--<h3 class="layui-timeline-title">8月18日</h3>-->
+                            <!--<p>-->
+                                <!--<span class="name">人物A</span>：-->
+                                <!--<span>人物A做的事。擦药奴才马上下use现场米OCXUI，FI动画次奥。</span>-->
+                            <!--</p>-->
+                            <!--<p>-->
+                                <!--<span class="name">人物B</span>：-->
+                                <!--<span>人物B做的事。香茅草覅什么。</span>-->
+                            <!--</p>-->
+                            <!--<p>-->
+                                <!--<span class="name">人物C</span>：-->
+                                <!--<span>人物C做的事。什么大风车。</span>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</li>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--调用main.js的start()方法启动APP-->
+<script src="main.js"></script>
+
+
+</body>
+</html>
