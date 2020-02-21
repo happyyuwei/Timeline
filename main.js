@@ -460,7 +460,7 @@ let start = () => {
 
     //添加帮助事件
     dom.getElementById("help").addEventListener("click", () => {
-        alert("清除输入框：alt+c，更新时间线：alt+s。");
+        alert("清除输入框：alt+c，更新时间线：alt+s。可以直接在生成的时间线上修改内容。");
     });
 
     //载入保存的时间线
