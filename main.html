@@ -6,13 +6,21 @@
     <link href="./drawable/logo.png" rel="icon" type="image/x-ico">
     <link rel="stylesheet" href="./layui/css/layui.css" media="all">
     <style>
-        .name{
+        .name {
             font-weight: bold;
-            font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+            font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
         }
-        .highlight{
+
+        .highlight {
             font-weight: bold;
             color: purple;
+        }
+
+        .edit-paragraph{
+            outline: none;
+        }
+        .edit-paragraph:focus{
+            border-bottom: 2px solid deepskyblue;
         }
     </style>
 </head>
@@ -46,7 +54,7 @@
 <div class="layui-card" style="position: fixed; width: 25%; z-index: 2">
     <div class="layui-card-body">
 
-        <br>
+
         <div id="warning_div" style="text-align: center; color: #FD482C; visibility: hidden">无警告！</div>
         <!--角色输入框-->
         <input id="name_input" type="text" placeholder="请输入角色" class="layui-input">
@@ -59,6 +67,14 @@
         <!--内容输入框-->
         <textarea id="detail_input" placeholder="请输入内容" class="layui-textarea" style="height: 200px"></textarea>
 
+
+
+        <div style="float: right">
+            <span style="font-style: italic; color: lightgray;font-size: 12px">隐藏该细节 &nbsp;</span>
+            <input id="invisible_checkbox" type="checkbox" placeholder="">
+        </div>
+        <br>
+
         <br>
 
         <!--更新案件按钮-->
@@ -70,44 +86,61 @@
 </div>
 
 
+
 <div class="layui-row layui-col-space15">
 
 
     <div class="layui-col-md3">
         <!--左边空的-->
     </div>
-    <div class="layui-col-md9">
+    <div class="layui-col-md8">
         <div class="layui-card">
             <div class="layui-card-body">
+
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
                     <legend>案件时间线</legend>
                 </fieldset>
                 <div id="timeline-container">
                     <!--<li class="layui-timeline-item" >-->
-                        <!--<i class="layui-icon layui-timeline-axis"></i>-->
-                        <!--<div class="layui-timeline-content layui-text">-->
-                            <!--<h3 class="layui-timeline-title">8月18日</h3>-->
-                            <!--<p>-->
-                                <!--<span class="name">人物A</span>：-->
-                                <!--<span contenteditable="true">人物A做的事。看见<span style="font-weight: bold;color: blueviolet">小安</span>在睡觉。</span>-->
-                            <!--</p>-->
-                            <!--<p>-->
-                                <!--<span class="name">人物B</span>：-->
-                                <!--<span>人物B做的事。香茅草覅什么。</span>-->
-                            <!--</p>-->
-                            <!--<p>-->
-                                <!--<span class="name">人物C</span>：-->
-                                <!--<span>人物C做的事。什么大风车。</span>-->
-                            <!--</p>-->
-                        <!--</div>-->
+                    <!--<i class="layui-icon layui-timeline-axis"></i>-->
+                    <!--<div class="layui-timeline-content layui-text">-->
+                    <!--<h3 class="layui-timeline-title">8月18日</h3>-->
+                    <!--<p>-->
+                    <!--<span class="name">人物A</span>：-->
+                    <!--<span contenteditable="true">人物A做的事。看见<span style="font-weight: bold;color: blueviolet">小安</span>在睡觉。</span>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                    <!--<span class="name">人物B</span>：-->
+                    <!--<span>人物B做的事。香茅草覅什么。</span>-->
+                    <!--</p>-->
+                    <!--<p>-->
+                    <!--<span class="name">人物C</span>：-->
+                    <!--<span>人物C做的事。什么大风车。</span>-->
+                    <!--</p>-->
+                    <!--</div>-->
                     <!--</li>-->
                 </div>
             </div>
         </div>
     </div>
+    <div class="layui-col-md1">
+        <br>
+        <br>
+        <div class="layui-form" id="invisible_render_switch_div">
+            <input id="invisible_render_switch" type="checkbox" lay-skin="switch" lay-text="ON|OFF" placeholder="">
+        </div>
+    </div>
 </div>
+
 <!--调用main.js的start()方法启动APP-->
 <script src="main.js"></script>
+<script src="./layui/layui.js"></script>
+<script>
+    //layui用于启动美观的开关组件
+    layui.use('form', function () {
+        let form = layui.form;
+    });
+</script>
 
 
 </body>
