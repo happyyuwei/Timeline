@@ -3,6 +3,29 @@ let dom = window.document
 
 //时间线
 let timeline = [];
+/**
+ * 时间线数据结构
+timeline:[
+    {
+        "time":20000,   //时间存储的是当天0点开始的分钟数。
+        "detailArray":[    //一个时间下面会存在多个人的行动细节
+            {
+                "name":"" ,    //该细节的主角，
+                "detail":[   //详细信息以字符串保存
+                    "detail information", ...
+                ],
+                "visible":[   //设置细节是否可见
+                     true,
+                     false,
+                     ...
+                ]
+            },
+            ...
+        ]
+    },
+    ...
+]
+ */
 
 //角色, 记录角色的基本信息用于渲染
 let role_list = [];
@@ -253,11 +276,21 @@ let updateTimeline = () => {
  */
 let renderDetail = (detail) => {
 
+    //去除所有换行符
+    // detail=detail.replace(/\s+/g,"。");
+
+    //高亮所有人物姓名
     for (let i = 0; i < role_list.length; i++) {
 
         let name_html = "<span class='highlight'>" + role_list[i] + "</span>";
         detail = detail.replace(new RegExp(role_list[i], "gm"), name_html);
     }
+
+    //将多个逗号替换成一个
+    // detail=detail.replace(new RegExp("，+","gm"),"，");
+    // detail=detail.replace(new RegExp("。+","gm"),"。");
+    // detail=detail.replace(new RegExp("；+","gm"),"；");
+    //
     // console.log(detail);
     return detail;
 };
@@ -310,7 +343,7 @@ let createNameDetail = (time, nameDetail) => {
             if (detail_click === undefined) {
                 detail_click=id_detail_map[e.path[1].id];
             }
-            console.log(detail_click);
+            // console.log(detail_click);
             name_input.value = detail_click.name;
             time_input.value = detail_click.time;
             detail_input.value = detail_click.detail;
